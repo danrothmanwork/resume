@@ -602,54 +602,54 @@ const contactObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const shouldShow = !entry.isIntersecting;
 
-    if (shouldShow) {
-      // Animate main-contact out
-      mainContact.classList.remove('animate-in');
-      mainContact.classList.add('animate-out');
-      profile.classList.remove('animate-in');
-      profile.classList.add('animate-out');
+    if (window.innerWidth >= 768) {
+  if (shouldShow) {
+    mainContact.classList.remove('animate-in');
+    mainContact.classList.add('animate-out');
+    profile.classList.remove('animate-in');
+    profile.classList.add('animate-out');
 
-      // Show sidebar content
-      if (!contactClone) {
-        contactClone = document.createElement('div');
-        contactClone.className = 'sidebar-contact-content';
-        contactClone.innerHTML = `
-          <p style="text-align: center; font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem;">Dan Rothman</p>
-          <hr style="margin: 0.3rem 0;">
-          <p><i class="bi bi-geo-alt"></i> Oklahoma City, OK</p>
-          <p><i class="bi bi-telephone"></i> 206-432-7106</p>
-          <p><i class="bi bi-envelope"></i> <a href="mailto:dan@rothman.work">dan@rothman.work</a></p>
-          <p><i class="bi bi-globe"></i> <a href="https://dan.rothman.work" target="_blank">dan.rothman.work</a></p>
-          <p><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/dan-rothman" target="_blank">linkedin.com/in/dan-rothman</a></p>
-        `;
-      }
-
-      if (!sidebarContact.classList.contains('show')) {
-        sidebarContact.innerHTML = '';
-        sidebarContact.appendChild(contactClone);
-        sidebarContact.classList.add('show');
-      }
-
-      if (sidebarProfile && !sidebarProfile.classList.contains('show')) {
-        sidebarProfile.classList.add('show');
-      }
-    } else {
-      // Animate main-contact back in
-      mainContact.classList.remove('animate-out');
-      mainContact.classList.add('animate-in');
-      profile.classList.remove('animate-out');
-      profile.classList.add('animate-in');
-
-      sidebarContact.classList.remove('show');
-      if (sidebarProfile) sidebarProfile.classList.remove('show');
-
-      setTimeout(() => {
-        const contactVisible = getComputedStyle(sidebarContact).opacity !== '0';
-        if (!contactVisible) {
-          sidebarContact.innerHTML = '';
-        }
-      }, 500);
+    if (!contactClone) {
+      contactClone = document.createElement('div');
+      contactClone.className = 'sidebar-contact-content';
+      contactClone.innerHTML = `
+        <p style="text-align: center; font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem;">Dan Rothman</p>
+        <hr style="margin: 0.3rem 0;">
+        <p><i class="bi bi-geo-alt"></i> Oklahoma City, OK</p>
+        <p><i class="bi bi-telephone"></i> 206-432-7106</p>
+        <p><i class="bi bi-envelope"></i> <a href="mailto:dan@rothman.work">dan@rothman.work</a></p>
+        <p><i class="bi bi-globe"></i> <a href="https://dan.rothman.work" target="_blank">dan.rothman.work</a></p>
+        <p><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/dan-rothman" target="_blank">linkedin.com/in/dan-rothman</a></p>
+      `;
     }
+
+    if (!sidebarContact.classList.contains('show')) {
+      sidebarContact.innerHTML = '';
+      sidebarContact.appendChild(contactClone);
+      sidebarContact.classList.add('show');
+    }
+
+    if (sidebarProfile && !sidebarProfile.classList.contains('show')) {
+      sidebarProfile.classList.add('show');
+    }
+  } else {
+    mainContact.classList.remove('animate-out');
+    mainContact.classList.add('animate-in');
+    profile.classList.remove('animate-out');
+    profile.classList.add('animate-in');
+
+    sidebarContact.classList.remove('show');
+    if (sidebarProfile) sidebarProfile.classList.remove('show');
+
+    setTimeout(() => {
+      const contactVisible = getComputedStyle(sidebarContact).opacity !== '0';
+      if (!contactVisible) {
+        sidebarContact.innerHTML = '';
+      }
+    }, 500);
+  }
+}
+
   });
 }, {
   threshold: 0,
