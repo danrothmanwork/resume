@@ -43,10 +43,7 @@
     p, li, ul, h1, h2, h3, h4, h5, h6 {
       color: var(--text-color);
     }
-    .container {
-      max-width: 960px;
-      margin-left: 240px;
-    }
+
     .section {
       margin-top: 2rem;
     }
@@ -285,8 +282,16 @@
 
     .container {
       max-width: 960px;
-      margin-left: 240px; /* aligns content with sidebar */
-    }     
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        margin-left: 240px;
+        margin-right: 0;
+      }
+    }  
 
   </style>
 </head>
