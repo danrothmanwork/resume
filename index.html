@@ -34,12 +34,17 @@
     }
     body {
       background: var(--bg-color);
-      padding: 1rem;
       font-family: 'Inter', sans-serif;
       scroll-behavior: smooth;
       color: var(--text-color);
     }
-  
+
+    @media (min-width: 768px) {
+      body {
+        padding: 0;
+      }
+    }
+
     p, li, ul, h1, h2, h3, h4, h5, h6 {
       color: var(--text-color);
     }
@@ -288,7 +293,7 @@
 
     @media (min-width: 768px) {
       .container {
-        margin-left: 240px;
+        margin-left: 220px;
         margin-right: 0;
       }
     }  
