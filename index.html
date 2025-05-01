@@ -522,19 +522,31 @@
           block: isMobile ? 'start' : 'center'
         });
   
-        setTimeout(() => {
-          document.getElementById('experience').classList.add('focus-mode');
-          document.querySelectorAll('.sub-card').forEach(card => card.classList.remove('focused'));
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
 
-          const focusedCard = target.closest('.sub-card');
-          focusedCard.classList.add('focused');
+        // Use two rAFs to wait until after scroll + animation frame
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const experienceSection = document.getElementById('experience');
+            const focusedCard = target.closest('.sub-card');
 
-          // Automatically remove highlight after 5 seconds
-          setTimeout(() => {
-            focusedCard.classList.remove('focused');
-            document.getElementById('experience').classList.remove('focus-mode');
-          }, 5000);
-        }, 400);
+            if (experienceSection && focusedCard) {
+              experienceSection.classList.add('focus-mode');
+              document.querySelectorAll('.sub-card').forEach(card => card.classList.remove('focused'));
+              focusedCard.classList.add('focused');
+
+              // Automatically remove focus highlight
+              setTimeout(() => {
+                focusedCard.classList.remove('focused');
+                experienceSection.classList.remove('focus-mode');
+              }, 5000);
+            }
+          });
+        });
+
       });
     });
     // Scroll observer to animate .card elements into view when visible
