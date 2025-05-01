@@ -9,6 +9,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+/* ----------------------------------------
+  Theme Colors: Light & Dark Mode Variables
+------------------------------------------- */
     :root {
       --bg-color: #f8f9fa;
       --text-color: #333;
@@ -94,6 +97,9 @@
     .skills span:hover, .certifications span:hover, .awards span:hover {
       background-color: var(--hover-bg);
       transform: scale(1.05);
+/* ----------------------------------------
+  Responsive Profile Image Styling
+------------------------------------------- */
     }
     .profile-img {
       width: 120px;
@@ -121,6 +127,9 @@
     @media (min-width: 768px) {
       .profile-img { width: 150px; height: 150px; }
     }
+/* ----------------------------------------
+  Sidebar Navigation Styling
+------------------------------------------- */
     .sidebar {
       position: fixed;
       top: 100px;
@@ -155,6 +164,9 @@
       .sidebar { display: none; }
       .container { margin-left: auto; }
     }
+/* ----------------------------------------
+  Floating Theme/PDF Buttons
+------------------------------------------- */
     .floating-buttons {
       position: fixed;
       bottom: 20px;
@@ -185,7 +197,9 @@
     [id^="exp-"] {
       scroll-margin-top: 40vh;
     }
-  
+/* ----------------------------------------
+  Focus Mode Highlight for Experience Cards
+------------------------------------------- */
     /* Updated container focus effect */
     .focus-mode .sub-card {
       opacity: 1;
@@ -193,13 +207,15 @@
       transform: none;
       pointer-events: auto;
     }
-  
+
     .focus-mode .sub-card.focused {
       border: 2px solid var(--link-hover);
       box-shadow: 0 0 12px var(--link-hover);
       background-color: rgba(0, 123, 255, 0.05);
     }
-
+/* ----------------------------------------
+  Sidebar Contact + Profile Slide Animations
+------------------------------------------- */
     .sidebar-contact {
       margin-bottom: 1rem;
       font-size: 0.85rem;
@@ -470,7 +486,7 @@
   <div style="height: 50vh;"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script>
-    // Sidebar focus click handler
+    // Highlight clicked experience sub-card in center focus mode
     document.querySelectorAll('.sidebar nav a[href^="#exp-"]').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -499,7 +515,7 @@
         }, 400);
       });
     });
-  
+    // Scroll observer to animate .card elements into view when visible
     document.addEventListener('DOMContentLoaded', function () {
       const cards = document.querySelectorAll('.card');
       const observer = new IntersectionObserver(entries => {
@@ -529,7 +545,7 @@
       ];
       const navLinks = sectionIds.map(id => document.querySelector(`.sidebar nav a[href="#${id}"]`));
       const sections = sectionIds.map(id => document.getElementById(id));
-  
+  // Observe section visibility to highlight active sidebar link
       const highlightObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           const index = sections.indexOf(entry.target);
@@ -547,7 +563,7 @@
         if (section) highlightObserver.observe(section);
       });
   
-      // Theme toggle
+      // Handle dark/light theme toggling with localStorage and system preference
       const toggleButton = document.getElementById('toggleTheme');
 
       // Load theme preference from localStorage
@@ -573,14 +589,13 @@
         window.open('/dan_rothman_resume.pdf', '_blank');
       });
 
-
 // Sidebar contact animation on scroll
 const mainContact = document.getElementById('main-contact');
 const sidebarContact = document.getElementById('sidebar-contact');
 const sidebarProfile = document.getElementById('sidebar-profile');
 const profile = document.querySelector('.profile-img');
 let contactClone = null;
-
+// Clone contact info from main section into sidebar when main profile scrolls out of view
 const contactObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const shouldShow = !entry.isIntersecting;
@@ -632,16 +647,12 @@ const contactObserver = new IntersectionObserver(entries => {
     }, 500);
   }
 }
-
   });
 }, {
   threshold: 0,
   rootMargin: '-100px 0px 0px 0px'
 });
-
 if (profile) contactObserver.observe(profile);
-// Sidebar contact animation on scroll ##END
-
     });
   </script>
   </body>
