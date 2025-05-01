@@ -229,6 +229,7 @@
       opacity: 1;
       transform: translateX(0);
       height: auto;
+      pointer-events: auto; /* ✅ Enable interaction of contact links when visible */
     }
 
     .sidebar-contact p {
@@ -631,7 +632,7 @@ const contactObserver = new IntersectionObserver(entries => {
         <p style="text-align: center; font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem;">Dan Rothman</p>
         <hr style="margin: 0.3rem 0;">
         <p><i class="bi bi-geo-alt"></i> Oklahoma City, OK</p>
-        <p><i class="bi bi-telephone"></i> 206-432-7106</p>
+        <p><i class="bi bi-telephone"></i> <a href="tel:2064327106">Text or Call</a></p>
         <p><i class="bi bi-envelope"></i> <a href="mailto:dan@rothman.work">dan@rothman.work</a></p>
         <p><i class="bi bi-globe"></i> <a href="https://dan.rothman.work" target="_blank">dan.rothman.work</a></p>
         <p><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/dan-rothman" target="_blank">linkedin.com/in/dan-rothman</a></p>
