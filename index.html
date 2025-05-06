@@ -58,13 +58,9 @@
       padding: 2rem;
       margin-bottom: 2rem;
       box-shadow: 0 4px 12px var(--card-shadow);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
+      opacity: 1; /* Always visible */
+      transform: none; /* Remove slide-up */
+      transition: none; /* No animation needed */
     }
     .sub-card {
       background: var(--card-bg);
@@ -551,18 +547,7 @@
       });
     });
     // Scroll observer to animate .card elements into view when visible
-    document.addEventListener('DOMContentLoaded', function () {
-      const cards = document.querySelectorAll('.card');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      cards.forEach(card => observer.observe(card));
-  
+    document.addEventListener('DOMContentLoaded', function () { 
       const sectionIds = [
         'summary',
         'experience',
