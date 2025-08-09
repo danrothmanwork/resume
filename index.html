@@ -21,10 +21,6 @@
       --link-color: #555;
       --link-hover: #007bff;
       --active-link: #000;
-      
-      --gap: clamp(12px, 3vw, 32px); /* min 12px, scales with viewport, max 32px */
-      --sbw: clamp(180px, 22vw, 240px); /* won’t get too small or too big */
-      --stickytop: 20px;
     }
     [data-theme="dark"] {
       --bg-color: #121212;
@@ -43,13 +39,9 @@
       color: var(--text-color);
     }
 
-    /* Grid layout for desktop+ */
     @media (min-width: 768px) {
       body {
-        display: grid;
-        grid-template-columns: var(--sbw) 1fr;
-        column-gap: var(--gap);
-        scroll-padding-top: calc(var(--stickytop) + 60px);
+        padding: 0;
       }
     }
 
@@ -66,6 +58,9 @@
       padding: 2rem;
       margin-bottom: 2rem;
       box-shadow: 0 4px 12px var(--card-shadow);
+      opacity: 1; /* Always visible */
+      transform: none; /* Remove slide-up */
+      transition: none; /* No animation needed */
     }
     .sub-card {
       background: var(--card-bg);
@@ -113,7 +108,7 @@
       margin: 0 auto 1rem auto;
     }
 
-    /* .profile-img.animate-out {
+    .profile-img.animate-out {
       opacity: 0;
       transform: translateX(-50px);
       transition: opacity 0.6s ease, transform 0.6s ease;
@@ -125,7 +120,7 @@
       transform: translateX(0);
       transition: opacity 0.6s ease, transform 0.6s ease;
       pointer-events: auto;
-    } */
+    }
 
     @media (min-width: 768px) {
       .profile-img { width: 150px; height: 150px; }
@@ -134,11 +129,11 @@
   Sidebar Navigation Styling
 ------------------------------------------- */
     .sidebar {
-      position: sticky;
-      top: var(--stickytop);
-      max-height: calc(100vh - var(--stickytop) * 2);
-      overflow: auto;
-      padding-right: 5px; /* prevent scrollbar overlap */
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 200px;
+      z-index: 1000;
     }
     .sidebar nav ul { list-style: none; padding: 0; margin: 0; }
     .sidebar nav li { margin-bottom: 0.8rem; }
@@ -379,7 +374,7 @@
     <div id="experience" class="section card">
       <h2>Professional Experience</h2>
     
-    <div id="dell-section" class="section card">
+    <div id="dell" class="section card">
       <h3 id="dell">Dell Technologies</h3>
       <p><em>Oklahoma City, OK | Nov 2015 – Present</em></p>
 
@@ -563,7 +558,7 @@
         'exp-vxrail-lead',
         'exp-vxrail',
         'exp-modular',
-        'exp-psp',
+        'exp-prosupport',
         'exp-analyst',
         'certifications',
         'awards',
