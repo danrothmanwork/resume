@@ -162,30 +162,39 @@
 
     @media (max-width: 991.98px) { aside[aria-label="Sidebar"] { display: none; } }
    
-    /* --- Sidebar slide-down + variable-driven crossfade --- */
+    /* --- Sidebar slide-down + scroll-synced crossfade --- */
     .js-profile-card {
       overflow: hidden;
-      height: 0;
+
+      /* driven by JS */
       --fade: 0;
+      --cardH: 0px;
+
+      height: var(--cardH);
       opacity: var(--fade);
-      transform: translateY(calc(-8px * (1 - var(--fade))));
+      transform: translateY(calc(12px * (1 - var(--fade))));
+
+      /* smooth slide + subtle ease */
       transition:
-        height 260ms ease,
-        opacity 0s linear,
-        transform 0s linear;
+        height 240ms cubic-bezier(.22,.61,.36,1),
+        opacity 120ms linear,
+        transform 220ms cubic-bezier(.22,.61,.36,1);
       will-change: height, opacity, transform;
     }
+
     .js-profile-card .profile-img,
     .js-profile-card .contact p {
       opacity: var(--fade);
-      transform: translateY(calc(-6px * (1 - var(--fade))));
-      transition: opacity 0s linear, transform 0s linear;
+      transform: translateY(calc(6px * (1 - var(--fade))));
+      transition: opacity 120ms linear, transform 220ms cubic-bezier(.22,.61,.36,1);
     }
+
     @media (prefers-reduced-motion: reduce) {
       .js-profile-card,
       .js-profile-card .profile-img,
       .js-profile-card .contact p { transition: none !important; }
     }
+
   </style>
 </head>
 <body>
@@ -523,112 +532,96 @@
     const mq = window.matchMedia('(min-width: 992px)');
     if (!header || !card) return;
 
-    // Easing so both fades feel the same (smoothstep)
-    const ease = t => t * t * (3 - 2 * t); // 0..1 -> 0..1
-
-    // Crossfade band (unchanged)
-    const START = 0.35;  // begin crossfade when header ~65% visible
-    const END   = 0.02;  // finish when header ~2% visible
-
-    // SHIFT: about one mouse-wheel "notch" sooner (tweak to taste)
-    const SCROLL_AHEAD_PX = 100; // try 80–140 if you want more/less shift
-
+    // Smoothstep easing
+    const ease = t => t * t * (3 - 2 * t);
     const clamp01 = x => Math.max(0, Math.min(1, x));
-    const setCardFade = f => card.style.setProperty('--fade', f.toFixed(3));
 
-    function showCardFully() {
-      if (card.dataset.state === 'shown') return;
-      if (card.dataset.state === 'crossfading') {
-        const h = card.offsetHeight;
-        card.style.height = h + 'px';
-        requestAnimationFrame(() => {
-          card.style.height = 'auto';
-          card.dataset.state = 'shown';
-        });
-        return;
-      }
+    // Crossfade window (unchanged) + slight scroll-ahead
+    const START = 0.35;
+    const END   = 0.02;
+    const SCROLL_AHEAD_PX = 100;
+
+    // helpers
+    const setFade = f => card.style.setProperty('--fade', f.toFixed(3));
+    const setH    = px => card.style.setProperty('--cardH', Math.max(0, Math.round(px)) + 'px');
+
+    let prepared = false;
+    let fullH = 0;
+
+    function measureFullHeight() {
+      // temporarily override height to let content expand, measure, then restore
+      const prevInlineHeight = card.style.height;
+      card.style.height = 'auto';
+      fullH = card.scrollHeight || 0;
+      card.style.height = prevInlineHeight;
+    }
+
+    function prepareCard() {
+      if (prepared) return;
       card.style.display = '';
-      card.style.height = '0px';
-      void card.offsetWidth;
-      card.style.height = card.scrollHeight + 'px';
-      card.dataset.state = 'animating-in';
-      const onEnd = (e) => {
-        if (e.target !== card || e.propertyName !== 'height') return;
-        card.removeEventListener('transitionend', onEnd);
-        card.style.height = 'auto';
-        card.dataset.state = 'shown';
-      };
-      card.addEventListener('transitionend', onEnd);
+      setFade(0);
+      // ensure we can measure once, invisibly
+      const prev = card.style.height;
+      card.style.height = 'auto';
+      fullH = card.scrollHeight || 0;
+      card.style.height = prev;
+      setH(0);
+      prepared = true;
     }
 
-    function hideCardFully() {
-      if (card.style.display === 'none' || card.dataset.state === 'hidden') return;
-      card.style.height = card.scrollHeight + 'px';
-      void card.offsetWidth;
-      card.style.height = '0px';
-      card.dataset.state = 'animating-out';
-      const onEnd = (e) => {
-        if (e.target !== card || e.propertyName !== 'height') return;
-        card.removeEventListener('transitionend', onEnd);
-        card.style.display = 'none';
-        card.dataset.state = 'hidden';
-      };
-      card.addEventListener('transitionend', onEnd);
-    }
-
-    function resetMobile() {
-      setCardFade(0);
+    function cleanupCard() {
+      prepared = false;
+      fullH = 0;
+      setFade(0);
+      setH(0);
       card.style.display = 'none';
-      card.style.height = '0px';
-      card.dataset.state = 'hidden';
-      header.style.opacity = '';
     }
 
-    // How much of the header is visible, but shifted upward by SCROLL_AHEAD_PX
     function headerVisibleRatio() {
       const rect = header.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-
-      // raw visible pixels of header
       const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-
-      // shift earlier by a fixed pixel amount
       const shifted = visiblePx - SCROLL_AHEAD_PX;
-
-      // normalize to 0..1 range of header height
       return clamp01(shifted / Math.max(1, rect.height));
     }
 
-    // rAF scroll loop
     let ticking = false;
     function update() {
       ticking = false;
-      if (!mq.matches) { resetMobile(); return; }
 
-      const ratio = headerVisibleRatio();                 // 1..0 as header leaves (shifted)
-      const progress = clamp01((START - ratio) / (START - END)); // 0 at START, 1 at END
-      const eased = ease(progress);
-
-      // Header fade (driven directly)
-      header.style.opacity = (1 - eased).toFixed(3);
-
-      if (progress <= 0) {
-        setCardFade(0);
-        if (card.style.display !== 'none') hideCardFully();
+      // Hide sidebar entirely on mobile
+      if (!mq.matches) {
+        cleanupCard();
+        header.style.opacity = '';
         return;
       }
 
-      if (card.style.display === 'none') {
-        card.style.display = '';
-        card.style.height = 'auto';
-        card.dataset.state = 'crossfading';
+      const ratio = headerVisibleRatio(); // 1..0 as header leaves (shifted)
+      const progress = clamp01((START - ratio) / (START - END)); // 0→1 across band
+      const eased = ease(progress);
+
+      // fade header out
+      header.style.opacity = (1 - eased).toFixed(3);
+
+      if (progress <= 0) {
+        // keep card invisible/collapsed while header is still up
+        setFade(0);
+        setH(0);
+        if (prepared) cleanupCard();
+        return;
       }
 
-      setCardFade(eased);
+      // reveal & slide card
+      if (!prepared) prepareCard();
+      if (!fullH) measureFullHeight();
 
+      setFade(eased);
+      setH(fullH * eased);
+
+      // snap to final dimensions when fully shown
       if (progress >= 1) {
-        setCardFade(1);
-        showCardFully();
+        setFade(1);
+        setH(fullH);
       }
     }
 
@@ -639,8 +632,19 @@
       }
     }
 
+    // Re-measure on resize (font size / text wrap can change height)
+    window.addEventListener('resize', () => {
+      if (prepared) {
+        // temporarily let it expand to measure accurately
+        const currVar = getComputedStyle(card).getPropertyValue('--cardH');
+        card.style.height = 'auto';
+        fullH = card.scrollHeight || fullH;
+        card.style.height = ''; // back to CSS variable
+      }
+      onScrollOrResize();
+    }, { passive: true });
+
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize, { passive: true });
     mq.addEventListener('change', onScrollOrResize);
 
     // First paint
