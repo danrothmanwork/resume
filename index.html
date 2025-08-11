@@ -1,680 +1,652 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Dan Rothman's Professional Resume">
-  <title>Dan Rothman - Resume</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Dan Rothman — Principal Engineer resume, skills, and experience." />
+  <title>Dan Rothman — Resume</title>
+
+  <!-- Performance: establish early connections for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap (CSS only) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f8f9fa" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph / Twitter basics -->
+  <meta property="og:title" content="Dan Rothman — Resume" />
+  <meta property="og:description" content="Principal Engineer focused on VxRail & PowerFlex. Ten years of enterprise support at Dell." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="profile.jpg" />
+  <meta name="twitter:card" content="summary" />
+
   <style>
-/* ----------------------------------------
-  Theme Colors: Light & Dark Mode Variables
-------------------------------------------- */
+    /* -----------------------------
+       Design tokens (light/dark)
+    ------------------------------ */
     :root {
-      --bg-color: #f8f9fa;
-      --text-color: #333;
+      --bg: #f8f9fa;
+      --text: #222;
+      --muted: #6c757d;
       --card-bg: #fff;
-      --card-shadow: rgba(0, 0, 0, 0.1);
-      --hover-bg: #d1e7dd;
-      --link-color: #555;
-      --link-hover: #007bff;
-      --active-link: #000;
+      --border: rgba(0,0,0,.08);
+      --shadow: 0 2px 16px rgba(0,0,0,.08);
+      --link: #0d6efd;
+      --chip-bg: #eef1f4;
     }
     [data-theme="dark"] {
-      --bg-color: #121212;
-      --text-color: #ffffff;
-      --card-bg: #1e1e1e;
-      --card-shadow: rgba(255, 255, 255, 0.05);
-      --hover-bg: #2c2c2c;
-      --link-color: #bbbbbb;
-      --link-hover: #66b2ff;
-      --active-link: #ffffff;
-    }
-    body {
-      background: var(--bg-color);
-      font-family: 'Inter', sans-serif;
-      scroll-behavior: smooth;
-      color: var(--text-color);
+      --bg: #121212;
+      --text: #f1f3f5;
+      --muted: #b7bbc0;
+      --card-bg: #1a1a1a;
+      --border: rgba(255,255,255,.06);
+      --shadow: 0 2px 16px rgba(0,0,0,.4);
+      --link: #66b2ff;
+      --chip-bg: #26292c;
     }
 
-    @media (min-width: 768px) {
-      body {
-        padding: 0;
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+
+    /* a11y: visible focus */
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    .skip-link:focus { left: 12px; top: 12px; width: auto; height: auto; padding: .5rem .75rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: .5rem; box-shadow: var(--shadow); }
+
+    /* Layout: CSS Grid with sticky aside (no overlap/clipping) */
+    .layout { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 1060px; margin: 0 auto; padding: 1rem; }
+    @media (min-width: 992px) {
+      .layout {
+        grid-template-columns: 260px 1fr;
+        gap: 2rem;
+        padding: 2rem;
+      }
+      aside[aria-label="Sidebar"] {
+        position: sticky;
+        top: 20px;
+        align-self: start;
+        min-height: 1px;
       }
     }
+    header.site-header { margin-bottom: .5rem; }
 
-    p, li, ul, h1, h2, h3, h4, h5, h6 {
-      color: var(--text-color);
-    }
-
-    .section {
-      margin-top: 2rem;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: 0.5rem;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px var(--card-shadow);
-      opacity: 1; /* Always visible */
-      transform: none; /* Remove slide-up */
-      transition: none; /* No animation needed */
-    }
-    .sub-card {
-      background: var(--card-bg);
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 8px var(--card-shadow);
-      transition: border 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
-    }
-    .contact a {
-      text-decoration: none;
-      color: var(--link-color);
-    }
-    .contact a:hover {
-      color: var(--link-hover);
-    }
-    ul {
-      padding-left: 1.2rem;
-    }
-    .skills span, .certifications span, .awards span {
-      display: inline-block;
-      margin: 0.2rem;
-      background: #eee;
-      padding: 0.3rem 0.6rem;
-      border-radius: 0.3rem;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
-    }
-    [data-theme="dark"] .skills span, [data-theme="dark"] .certifications span, [data-theme="dark"] .awards span {
-      background: #333;
-    }
-    .skills span:hover, .certifications span:hover, .awards span:hover {
-      background-color: var(--hover-bg);
-      transform: scale(1.05);
-/* ----------------------------------------
-  Responsive Profile Image Styling
-------------------------------------------- */
-    }
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
-      margin: 0 auto 1rem auto;
+    /* Header opacity is driven by JS; no CSS transition lag */
+    header.site-header {
+      will-change: opacity;
+      transition: opacity 0s linear;
     }
 
-    .profile-img.animate-out {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: none;
-    }
+    /* Cards */
+    .card-like { background: var(--card-bg); border: 1px solid var(--border); border-radius: .75rem; box-shadow: var(--shadow); padding: 1.25rem; }
+    .sub-card { border: 1px solid var(--border); border-radius: .75rem; padding: 1rem; margin-bottom: 1rem; background: var(--card-bg); }
 
-    .profile-img.animate-in {
-      opacity: 1;
-      transform: translateX(0);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: auto;
-    }
+    /* Sidebar */
+    .profile-img { width: 120px; height: 120px; display: block; }
+    @media (min-width: 992px) { .profile-img { width: 140px; height: 140px; } }
 
-    @media (min-width: 768px) {
-      .profile-img { width: 150px; height: 150px; }
+    /* Sidebar nav using Bootstrap nav-pills + left stripe when active */
+    .sidebar-nav .nav-link {
+      color: var(--text);
+      border-radius: .25rem;
+      padding: .35rem .25rem .35rem .75rem;
     }
-/* ----------------------------------------
-  Sidebar Navigation Styling
-------------------------------------------- */
-    .sidebar {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 200px;
-      z-index: 1000;
+    .sidebar-nav .nav-link:hover {
+      color: var(--link);
+      background: transparent;
     }
-    .sidebar nav ul { list-style: none; padding: 0; margin: 0; }
-    .sidebar nav li { margin-bottom: 0.8rem; }
-    .sidebar nav a {
-      text-decoration: none;
-      color: var(--link-color);
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .sidebar nav a:hover { color: var(--link-hover); }
-    .sidebar nav a.active {
-      color: var(--active-link);
+    .sidebar-nav .nav-link[aria-current="true"] {
+      background: transparent;
       font-weight: 700;
-      border-left: 3px solid var(--link-hover);
-      padding-left: 6px;
-    }
-    .sidebar nav ul ul {
-      margin-top: 0.5rem;
-    }
-  
-    .sidebar nav ul ul li {
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-    }
-    @media (max-width: 767px) {
-      .sidebar { display: none; }
-      .container { margin-left: auto; }
-    }
-/* ----------------------------------------
-  Floating Theme/PDF Buttons
-------------------------------------------- */
-    .floating-buttons {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 2000;
-    }
-    .floating-buttons button {
-      background: var(--card-bg);
-      border: 1px solid var(--link-color);
-      color: var(--text-color);
-      padding: 0.6rem;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px var(--card-shadow);
-      transition: background 0.3s, transform 0.3s;
-    }
-    .floating-buttons button:hover {
-      background: var(--hover-bg);
-      transform: scale(1.1);
-    }
-    [id^="exp-"] {
-      scroll-margin-top: 100px;
-    }
-/* ----------------------------------------
-  Focus Mode Highlight for Experience Cards
-------------------------------------------- */
-    /* Updated container focus effect */
-    .focus-mode .sub-card {
-      opacity: 1;
-      filter: none;
-      transform: none;
-      pointer-events: auto;
-    }
-
-    .focus-mode .sub-card.focused {
-      border: 2px solid var(--link-hover);
-      box-shadow: 0 0 12px var(--link-hover);
-      background-color: rgba(0, 123, 255, 0.05);
-    }
-/* ----------------------------------------
-  Sidebar Contact + Profile Slide Animations
-------------------------------------------- */
-    .sidebar-contact {
-      margin-bottom: 1rem;
-      font-size: 0.85rem;
-      min-height: 140px; /* Reserve space even when hidden */
-      opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: none;
       position: relative;
     }
-
-    .sidebar-contact.show {
-      opacity: 1;
-      transform: translateX(0);
-      height: auto;
-      pointer-events: auto; /* ✅ Enable interaction of contact links when visible */
+    .sidebar-nav .nav-link[aria-current="true"]::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--link);
+      border-radius: .25rem;
     }
 
-    .sidebar-contact p {
-      margin: 0.25rem 0;
-      font-size: 0.85rem;
-      text-align: left;
-      padding-left: 0.5rem;
+    /* Chips */
+    .chips span { display: inline-block; background: var(--chip-bg); border-radius: .5rem; padding: .3rem .6rem; margin: .2rem .2rem 0 0; font-size: .92rem; }
+
+    /* Print: clean PDF without sidebar/buttons */
+    @media print {
+      .layout { display: block; max-width: 100%; padding: 0; }
+      aside, .fab { display: none !important; }
+      .card-like, .sub-card { break-inside: avoid; box-shadow: none; border-color: #ccc; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-weight: normal; font-size: 10pt; }
     }
 
-    .sidebar-contact a {
-      color: var(--text-color); /* match brightness of other contact text */
-      text-decoration: none;
-      word-break: break-all;
+    /* Motion safety */
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+
+    /* FAB positioning */
+    .fab {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      display: grid;
+      gap: 10px;
+      z-index: 9999;
+    }
+    .fab .btn { width: 48px; height: 48px; padding: 0; display: grid; place-items: center; }
+
+    .btn-surface {
+      --bs-btn-bg: var(--card-bg);
+      --bs-btn-color: var(--text);
+      --bs-btn-border-color: var(--border);
+      --bs-btn-hover-bg: var(--chip-bg);
+      --bs-btn-hover-border-color: var(--border);
+      --bs-btn-active-bg: var(--chip-bg);
+      --bs-btn-active-border-color: var(--border);
+      --bs-btn-focus-shadow-rgb: 13,110,253;
     }
 
-    .sidebar-contact i {
-      margin-right: 6px;
+    .fab :focus-visible,
+    .sidebar-nav :focus-visible,
+    .card-like :focus-visible {
+      outline: 3px solid var(--link);
+      outline-offset: 2px;
     }
 
-    .profile-img-sidebar {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
-      margin: 0 auto 1rem auto;
-      opacity: 0;
-      transform: translateX(40px); /* Slide in from the right */
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: none;
+    .contact-row { display: inline-flex; align-items: center; gap: .5rem; }
+    .contact-row--block { display: flex; align-items: center; gap: .5rem; }
+
+    @media (max-width: 991.98px) { aside[aria-label="Sidebar"] { display: none; } }
+   
+    /* --- Sidebar slide-down + variable-driven crossfade --- */
+    .js-profile-card {
+      overflow: hidden;
+      height: 0;
+      --fade: 0;
+      opacity: var(--fade);
+      transform: translateY(calc(-8px * (1 - var(--fade))));
+      transition:
+        height 260ms ease,
+        opacity 0s linear,
+        transform 0s linear;
+      will-change: height, opacity, transform;
     }
-
-    .profile-img-sidebar.show {
-      opacity: 1;
-      transform: translateX(0);
-      pointer-events: auto;
+    .js-profile-card .profile-img,
+    .js-profile-card .contact p {
+      opacity: var(--fade);
+      transform: translateY(calc(-6px * (1 - var(--fade))));
+      transition: opacity 0s linear, transform 0s linear;
     }
-
-    /* Transition classes for main-contact */
-    #main-contact.animate-out {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: none;
+    @media (prefers-reduced-motion: reduce) {
+      .js-profile-card,
+      .js-profile-card .profile-img,
+      .js-profile-card .contact p { transition: none !important; }
     }
-
-    #main-contact.animate-in {
-      opacity: 1;
-      transform: translateX(0);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: auto;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .container {
-        margin-left: 220px;
-        margin-right: 0;
-      }
-    }  
-
   </style>
 </head>
 <body>
-  <div class="floating-buttons">
-    <button id="toggleTheme" title="Toggle Theme"><i class="bi bi-moon-stars"></i></button>
-    <button id="downloadPDF" title="Download PDF"><i class="bi bi-download"></i></button>
-  </div>
+  <a class="skip-link" href="#content">Skip to content</a>
 
-  <div class="sidebar d-none d-md-block">
-    <!-- 👤 Profile image that slides in/out-->
-    <img src="profile.jpg" alt="Profile picture" id="sidebar-profile" class="profile-img-sidebar mb-2" loading="lazy">
+  <header class="site-header py-4">
+    <div class="container-xxl text-center px-3">
 
-    <!-- 📇 Contact info that slides in/out -->
-    <div id="sidebar-contact" class="sidebar-contact"></div>
+      <img src="./profile.jpg" alt="Dan Rothman headshot"
+          width="150" height="150"
+          class="profile-img rounded-circle object-fit-cover mb-3 mx-auto d-block"
+          fetchpriority="high"
+          onerror="this.style.display='none'">
 
-    <!-- 📎 Sidebar nav -->
-    <nav>
-      <ul>
-        <li><a href="#summary">Summary</a></li>
-        <li>
-          <a href="#experience">Experience</a>
-          <ul style="padding-left: 1rem;">
-            <li><a href="#exp-principal-engineer">VxRail/PowerFlex Principal Engineer</a></li>
-            <li><a href="#exp-vxrail-senior">VxRail Senior Engineer</a></li>
-            <li><a href="#exp-vxrail-lead">VxRail Team Lead</a></li>
-            <li><a href="#exp-vxrail">VxRail Support Engineer</a></li>
-            <li><a href="#exp-modular">Modular Support Engineer</a></li>
-            <li><a href="#exp-psp">PSP Support Engineer</a></li>
-            <li><a href="#exp-analyst">Tech Support Analyst</a></li>
-          </ul>
-        </li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#awards">Awards</a></li>
-        <li><a href="#skills">Skills</a></li>
-      </ul>
-    </nav>
-  </div>
+      <h1 class="h2 mb-1">Dan Rothman</h1>
 
-  <div class="container"> <!-- Main content container for layout alignment -->
-    <div class="text-center">
-      <img src="profile.jpg" alt="Profile picture" class="profile-img animate-in" loading="lazy">
-  
-      <!-- Header Contact Information -->
-      <div id="main-contact" class="contact text-center animate-in">
-        <h1>Dan Rothman</h1>
-  
-        <!-- Location -->
-        <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap mb-1">
-          <i class="bi bi-geo-alt fs-5"></i>
-          <span>Oklahoma City, OK</span>
+      <!-- Location -->
+      <div class="contact-row mb-2">
+        <i class="bi bi-geo-alt" aria-hidden="true"></i>
+        <span>Oklahoma City, OK</span>
+      </div>
+
+      <!-- Phone + Email -->
+      <div class="contact-row d-flex flex-column flex-md-row justify-content-center mb-2">
+        <div class="me-md-4">
+          <i class="bi bi-telephone" aria-hidden="true"></i>
+          <a href="tel:+12064327106">+1 (206) 432-7106</a>
         </div>
-  
-        <!-- Phone and Email -->
-        <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap mb-1">
-          <i class="bi bi-telephone fs-5"></i>
-          <a href="tel:2064327106">+1 (206) 432-7106</a>
-          <i class="bi bi-envelope fs-5"></i>
+        <div>
+          <i class="bi bi-envelope" aria-hidden="true"></i>
           <a href="mailto:dan@rothman.work">dan@rothman.work</a>
         </div>
-  
-        <!-- Website and LinkedIn -->
-        <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
-          <i class="bi bi-globe fs-5"></i>
-          <a href="https://dan.rothman.work" target="_blank">dan.rothman.work</a>
-          <i class="bi bi-linkedin fs-5"></i>
-          <a href="https://www.linkedin.com/in/dan-rothman" target="_blank">linkedin.com/in/dan-rothman</a>
+      </div>
+
+      <!-- Website + LinkedIn -->
+      <div class="contact-row d-flex flex-column flex-md-row justify-content-center">
+        <div class="me-md-4">
+          <i class="bi bi-globe" aria-hidden="true"></i>
+          <a href="https://dan.rothman.work" target="_blank" rel="noopener">dan.rothman.work</a>
+        </div>
+        <div>
+          <i class="bi bi-linkedin" aria-hidden="true"></i>
+          <a href="https://www.linkedin.com/in/dan-rothman" target="_blank" rel="noopener">linkedin.com/in/dan-rothman</a>
         </div>
       </div>
+
     </div>
+  </header>
 
-    <div id="summary" class="section card">
-      <h2>Professional Summary</h2>
-      <p>Principal Support Engineer specializing in enterprise infrastructure solutions, with a decade of progressive experience at Dell Technologies. Expert in hyper-converged systems (VxRail, PowerFlex), VMware environments, and containerized platforms. Proven history supporting mission-critical systems for Fortune 100 clients including Wells Fargo and BNY Mellon. Skilled in root cause analysis, incident management, and cross-functional collaboration. Known for technical leadership, mentoring, and delivering initiative-taking solutions that drive customer success and system stability.</p>
-    </div>
-  
-    <div id="experience" class="section card">
-      <h2>Professional Experience</h2>
-    
-    <div id="dell" class="section card">
-      <h3 id="dell">Dell Technologies</h3>
-      <p><em>Oklahoma City, OK | Nov 2015 – Present</em></p>
-
-      <div class="sub-card">
-        <h4 id="exp-principal-engineer">VxRail & PowerFlex  Principal Engineer for Dedicated Support</h4>
-        <p><em>May 2021 – Present</em></p>
-        <ul>
-          <li>Provided dedicated support for VxRail environments at BNY Mellon and Wells Fargo before transitioning to specialize in PowerFlex systems.</li>
-          <li>Support compute and storage hyper converged infrastructure hardware, including standalone servers and SAN environments.</li>
-          <li>Provide expertise in hyper-converged infrastructure (HCI) solutions, including VMware vSAN and Dell PowerFlex SDS.</li>
-          <li>Administer and troubleshoot VMware ESXi, and vCenter environments to ensure stability and optimal performance.</li>
-          <li>Support containerized applications running on Docker and Kubernetes platforms.</li>
-          <li>Proactively identify systemic risks, such as hardware failures, and implement preventive solutions.</li>
-          <li>Lead root cause analyses and deliver comprehensive post-incident reports with actionable remediation plans.</li>
-          <li>Maintain customer-specific documentation, runbooks, and internal best practice guides.</li>
-          <li>Compile and present quarterly engineering summaries for QBRs, aligning technical performance with customer success metrics.</li>
-        </ul>
-      </div>
-
-      <div class="sub-card">
-        <h4 id="exp-vxrail-senior">VxRail Senior Engineer</h4>
-        <p><em>Nov 2019 – Nov 2021</em></p>
-        <ul>
-          <li>Managed production-impacting escalations as the senior escalation owner for VxRail environments.</li>
-          <li>Led recovery efforts and coordinated cross-functional teams to implement preventive solutions.</li>
-          <li>Authored detailed knowledge base articles and technical training materials.</li>
-          <li>Mentored frontline engineers to improve diagnostic accuracy and case management.</li>
-          <li>Diagnosed and resolved critical thermal issues at BNY Mellon's data center by analyzing node logs and identifying airflow deficiencies, resulting in improved system stability and a customer request to become their dedicated engineer.</li>
-        </ul>
-      </div>
-
-      <div class="sub-card">
-        <h4 id="exp-vxrail-lead">VxRail Technical Team Lead</h4>
-        <p><em>Dec 2018 – Nov 2019</em></p>
-        <ul>
-          <li>Trained and mentored new engineers supporting VxRail environments.</li>
-          <li>Provided strategic guidance on complex and high-priority customer escalations.</li>
-          <li>Developed and maintained a central repository for technical documentation, knowledge sharing, and improved workflows for more efficient case handling.</li>
-        </ul>
-      </div>
-
-      <div class="sub-card">
-        <h4 id="exp-vxrail">VxRail Technical Support Engineer</h4>
-        <p><em>Sep 2018 – Dec 2018</em></p>
-        <ul>
-          <li>Resolved hardware, networking, and VMware integration issues in VxRail clusters.</li>
-          <li>Recognized as a "VxRail Xpert" for technical excellence.</li>
-          <li>Promoted to Technical Team Lead position due to strong technical knowledge, excellent customer communication skills, and inter team leadership and education work.</li>
-        </ul>
-      </div>
-
-      <div class="sub-card">
-        <h4 id="exp-modular">Modular Technical Support Engineer</h4>
-        <p><em>Jan 2018 – Sep 2018</em></p>
-        <ul>
-          <li>Supported Dell's Modular infrastructure offerings, this included the M1000e, FX2, and VRTX platforms.</li>
-          <li>Diagnosed and resolved complex hardware and firmware issues.</li>
-          <li>Collaborated with engineering teams to escalate and document advanced solutions.</li>
-        </ul>
-      </div>
-
-      <div class="sub-card">
-        <h4 id="exp-psp">ProSupport Plus Technical Support Engineer</h4>
-        <p><em>Jan 2017 – Jan 2018</em></p>
-        <ul>
-          <li>Delivered ProSupport Plus grade support for PowerEdge, and Modular servers running VMware, Linux, and Windows.</li>
-          <li>Resolved complex issues involving storage arrays, firmware, RAID, and iDRAC.</li>
-          <li>Collaborated with internal support groups to resolve issues spanning multiple interdependent products.</li>
-          <li>Provided system health assessments and lifecycle optimization strategies.</li>
-        </ul>
-      </div>
-
-      <div class="sub-card">
-        <h4 id="exp-analyst">Enterprise Tech Support Analyst</h4>
-        <p><em>Nov 2015 – Jan 2017</em></p>
-        <ul>
-          <li>Delivered enterprise-grade support for PowerEdge servers running VMware, Linux, and Windows.</li>
-          <li>Mentored new analysts and contributed to internal training.</li>
-          <li>Recognized as a top performer and CCNA-certified networking SME.</li>
-          <li>Selected for Early Life Support team to debug hardware issues with new generation PowerEdge hardware and to field the first support calls.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="certifications" class="section card certifications">
-      <h2>Certifications</h2>
-      <p>
-        <span>VMware Certified Professional 6 – Data Center Virtualization (VCP6-DCV)</span>
-        <span>VxRail Xpert</span>
-        <span>Cisco Certified Network Associate (CCNA) – exp. 2019 - CSCO12950075</span>
-        <span>CompTIA Network+ - exp. 2018</span>
-      </p>
-    </div>
-
-    <div id="awards" class="section card awards">
-      <h2>Awards</h2>
-      <p>
-        <span>On the Spot Award – Recognized for fostering team morale. (2015)</span>
-        <span>On the Spot Award – For (2016)</span>
-        <span>Top Performer Award – Top Performing Engineer (2017)</span>
-        <span>Award – Contributions to Wells Fargo’s first PowerFlex migration from 3.x to 4.x</span>
-      </p>
-    </div>
-
-    <div id="skills" class="section card skills">
-      <h2>Technical Skills</h2>
-      <p>
-        <span>PowerFlex</span>
-        <span>VxRail</span>
-        <span>VMware vSphere/VCF</span>
-        <span>PowerEdge</span>
-        <span>vSAN</span>
-        <span>Nutanix</span>
-        <span>Kubernetes</span>
-        <span>Docker</span>
-        <span>Bash</span>
-        <span>PowerShell</span>
-        <span>REST APIs</span>
-        <span>Root Cause Analysis</span>
-        <span>Incident Management</span>
-        <span>Technical Mentorship</span>
-        <span>Documentation</span>
-        <span>Customer Communication</span>
-        <span>Escalation Management</span>
-      </p>
-    </div>
+  <!-- Nav buttons -->
+  <div class="fab" aria-label="page actions">
+    <button class="js-theme-toggle btn btn-surface rounded-circle shadow-sm border" type="button" aria-pressed="false">
+      <i class="bi bi-moon-stars" aria-hidden="true"></i>
+      <span class="visually-hidden">Toggle theme</span>
+    </button>
+    <a href="dan_rothman_resume.pdf" target="_blank" rel="noopener" class="btn btn-surface rounded-circle shadow-sm border" aria-label="Open PDF">
+      <i class="bi bi-download" aria-hidden="true"></i>
+    </a>
   </div>
 
-  <div style="height: 50vh;"></div>
+  <div class="layout" id="content">
+    <aside aria-label="Sidebar">
+      <div class="card-like mb-3 text-center js-profile-card" style="display:none">
+        <img src="profile.jpg" alt="Dan Rothman headshot" class="profile-img rounded-circle object-fit-cover mx-auto mb-3" width="140" height="140" loading="lazy" />
+        <div class="contact text-start small">
+          <p class="mb-1"><i class="bi bi-geo-alt me-1" aria-hidden="true"></i> Oklahoma City, OK</p>
+          <p class="mb-1"><i class="bi bi-telephone me-1" aria-hidden="true"></i> <a href="tel:+12064327106">+1 (206) 432-7106</a></p>
+          <p class="mb-1"><i class="bi bi-envelope me-1" aria-hidden="true"></i> <a href="mailto:dan@rothman.work">dan@rothman.work</a></p>
+          <p class="mb-1"><i class="bi bi-globe me-1" aria-hidden="true"></i> <a href="https://dan.rothman.work" target="_blank" rel="noopener">dan.rothman.work</a></p>
+          <p class="mb-0"><i class="bi bi-linkedin me-1" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/dan-rothman" target="_blank" rel="noopener">linkedin.com/in/dan-rothman</a></p>
+        </div>
+      </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <script>
-    // Highlight clicked experience sub-card in center focus mode
-    document.querySelectorAll('.sidebar nav a[href^="#exp-"]').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const id = link.getAttribute('href').substring(1);
-        const target = document.getElementById(id);
-  
-        // Scroll first, then apply focus after delay
-        const isMobile = window.innerWidth < 768;
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: isMobile ? 'start' : 'center'
-        });
-  
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+      <!-- Sidebar nav TEXT updated to match old resume -->
+      <nav class="card-like sidebar-nav" aria-label="Section navigation">
+        <ul class="nav nav-pills flex-column m-0">
+          <li class="nav-item"><a class="nav-link" href="#summary">Summary</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="#experience">Experience</a>
+            <ul class="list-unstyled ps-2 mt-1">
+              <li><a class="nav-link" href="#exp-principal-engineer">VxRail/PowerFlex Principal Engineer for Dedicated Support</a></li>
+              <li><a class="nav-link" href="#exp-vxrail-senior">VxRail Senior Engineer</a></li>
+              <li><a class="nav-link" href="#exp-vxrail-lead">VxRail Technical Team Lead</a></li>
+              <li><a class="nav-link" href="#exp-vxrail">VxRail Technical Support Engineer</a></li>
+              <li><a class="nav-link" href="#exp-modular">Modular Technical Support Engineer</a></li>
+              <li><a class="nav-link" href="#exp-psp">ProSupport Plus Technical Support Engineer</a></li>
+              <li><a class="nav-link" href="#exp-analyst">Tech Support Analyst</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#certifications">Certifications</a></li>
+          <li class="nav-item"><a class="nav-link" href="#awards">Awards</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-        // Use two rAFs to wait until after scroll + animation frame
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            const experienceSection = document.getElementById('experience');
-            const focusedCard = target.closest('.sub-card');
+    <main>
+      <!-- Summary (replaced with old content) -->
+      <section id="summary" class="card-like mb-3" aria-labelledby="summary-h">
+        <h2 id="summary-h" class="h4">Professional Summary</h2>
+        <p class="mb-0">
+          Principal Support Engineer specializing in enterprise infrastructure solutions, with a decade of progressive experience at Dell Technologies.
+          Expert in hyper-converged systems (VxRail, PowerFlex), VMware environments, and containerized platforms. Proven history supporting mission-critical
+          systems for Fortune 100 clients including Wells Fargo and BNY Mellon. Skilled in root cause analysis, incident management, and cross-functional
+          collaboration. Known for technical leadership, mentoring, and delivering initiative-taking solutions that drive customer success and system stability.
+        </p>
+      </section>
 
-            if (experienceSection && focusedCard) {
-              experienceSection.classList.add('focus-mode');
-              document.querySelectorAll('.sub-card').forEach(card => card.classList.remove('focused'));
-              focusedCard.classList.add('focused');
+      <!-- Experience (replaced with old content) -->
+      <section id="experience" class="card-like mb-3" aria-labelledby="experience-h">
+        <h2 id="experience-h" class="h4">Professional Experience</h2>
+        <article class="mb-3">
+          <header class="mb-2">
+            <h3 id="dell" class="h5 m-0">Dell Technologies</h3>
+            <p class="text-muted small m-0">Oklahoma City, OK · Nov 2015 – Present</p>
+          </header>
 
-              // Automatically remove focus highlight
-              setTimeout(() => {
-                focusedCard.classList.remove('focused');
-                experienceSection.classList.remove('focus-mode');
-              }, 5000);
-            }
-          });
-        });
+          <div class="sub-card" id="exp-principal-engineer">
+            <h4 class="h6 m-0">VxRail &amp; PowerFlex Principal Engineer for Dedicated Support</h4>
+            <p class="text-muted small mb-2">May 2021 – Present</p>
+            <ul class="mb-0">
+              <li>Provided dedicated support for VxRail environments at BNY Mellon and Wells Fargo before transitioning to specialize in PowerFlex systems.</li>
+              <li>Support compute and storage hyper converged infrastructure hardware, including standalone servers and SAN environments.</li>
+              <li>Provide expertise in hyper-converged infrastructure (HCI) solutions, including VMware vSAN and Dell PowerFlex SDS.</li>
+              <li>Administer and troubleshoot VMware ESXi, and vCenter environments to ensure stability and optimal performance.</li>
+              <li>Support containerized applications running on Docker and Kubernetes platforms.</li>
+              <li>Proactively identify systemic risks, such as hardware failures, and implement preventive solutions.</li>
+              <li>Lead root cause analyses and deliver comprehensive post-incident reports with actionable remediation plans.</li>
+              <li>Maintain customer-specific documentation, runbooks, and internal best practice guides.</li>
+              <li>Compile and present quarterly engineering summaries for QBRs, aligning technical performance with customer success metrics.</li>
+            </ul>
+          </div>
 
-      });
-    });
-    // Scroll observer to animate .card elements into view when visible
-    document.addEventListener('DOMContentLoaded', function () { 
-      const sectionIds = [
-        'summary',
-        'experience',
-        'exp-principal-engineer',
-        'exp-vxrail-senior',
-        'exp-vxrail-lead',
-        'exp-vxrail',
-        'exp-modular',
-        'exp-prosupport',
-        'exp-analyst',
-        'certifications',
-        'awards',
-        'skills'
-      ];
-      const navLinks = sectionIds.map(id => document.querySelector(`.sidebar nav a[href="#${id}"]`));
-      const sections = sectionIds.map(id => document.getElementById(id));
-  // Observe section visibility to highlight active sidebar link
-      const highlightObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          const index = sections.indexOf(entry.target);
-          if (entry.isIntersecting) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            if (navLinks[index]) navLinks[index].classList.add('active');
-          }
-        });
-      }, {
-        threshold: 0.5,
-        rootMargin: '-40% 0px -40% 0px'
-      });
-  
-      sections.forEach(section => {
-        if (section) highlightObserver.observe(section);
-      });
-  
-      // Handle dark/light theme toggling with localStorage and system preference
-      const toggleButton = document.getElementById('toggleTheme');
+          <div class="sub-card" id="exp-vxrail-senior">
+            <h4 class="h6 m-0">VxRail Senior Engineer</h4>
+            <p class="text-muted small mb-2">Nov 2019 – Nov 2021</p>
+            <ul class="mb-0">
+              <li>Managed production-impacting escalations as the senior escalation owner for VxRail environments.</li>
+              <li>Led recovery efforts and coordinated cross-functional teams to implement preventive solutions.</li>
+              <li>Authored detailed knowledge base articles and technical training materials.</li>
+              <li>Mentored frontline engineers to improve diagnostic accuracy and case management.</li>
+              <li>Diagnosed and resolved critical thermal issues at BNY Mellon's data center by analyzing node logs and identifying airflow deficiencies, resulting in improved system stability and a customer request to become their dedicated engineer.</li>
+            </ul>
+          </div>
 
-      // Load theme preference from localStorage
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      } else {
-        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.setAttribute('data-theme', prefersDarkScheme ? 'dark' : 'light');
-      }
+          <div class="sub-card" id="exp-vxrail-lead">
+            <h4 class="h6 m-0">VxRail Technical Team Lead</h4>
+            <p class="text-muted small mb-2">Dec 2018 – Nov 2019</p>
+            <ul class="mb-0">
+              <li>Trained and mentored new engineers supporting VxRail environments.</li>
+              <li>Provided strategic guidance on complex and high-priority customer escalations.</li>
+              <li>Developed and maintained a central repository for technical documentation, knowledge sharing, and improved workflows for more efficient case handling.</li>
+            </ul>
+          </div>
 
-      // Handle theme toggle
-      toggleButton.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-      });
-  
-      // Download PDF (link to static file)
-      const downloadButton = document.getElementById('downloadPDF');
-      downloadButton.addEventListener('click', () => {
-        window.open('/dan_rothman_resume.pdf', '_blank');
-      });
+          <div class="sub-card" id="exp-vxrail">
+            <h4 class="h6 m-0">VxRail Technical Support Engineer</h4>
+            <p class="text-muted small mb-2">Sep 2018 – Dec 2018</p>
+            <ul class="mb-0">
+              <li>Resolved hardware, networking, and VMware integration issues in VxRail clusters.</li>
+              <li>Recognized as a "VxRail Xpert" for technical excellence.</li>
+              <li>Promoted to Technical Team Lead position due to strong technical knowledge, excellent customer communication skills, and inter team leadership and education work.</li>
+            </ul>
+          </div>
 
-// Sidebar contact animation on scroll
-const mainContact = document.getElementById('main-contact');
-const sidebarContact = document.getElementById('sidebar-contact');
-const sidebarProfile = document.getElementById('sidebar-profile');
-const profile = document.querySelector('.profile-img');
-let contactClone = null;
-// Clone contact info from main section into sidebar when main profile scrolls out of view
-const contactObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const shouldShow = !entry.isIntersecting;
+          <div class="sub-card" id="exp-modular">
+            <h4 class="h6 m-0">Modular Technical Support Engineer</h4>
+            <p class="text-muted small mb-2">Jan 2018 – Sep 2018</p>
+            <ul class="mb-0">
+              <li>Supported Dell's Modular infrastructure offerings, this included the M1000e, FX2, and VRTX platforms.</li>
+              <li>Diagnosed and resolved complex hardware and firmware issues.</li>
+              <li>Collaborated with engineering teams to escalate and document advanced solutions.</li>
+            </ul>
+          </div>
 
-    if (window.innerWidth >= 768) {
-  if (shouldShow) {
-    mainContact.classList.remove('animate-in');
-    mainContact.classList.add('animate-out');
-    profile.classList.remove('animate-in');
-    profile.classList.add('animate-out');
+          <div class="sub-card" id="exp-psp">
+            <h4 class="h6 m-0">ProSupport Plus Technical Support Engineer</h4>
+            <p class="text-muted small mb-2">Jan 2017 – Jan 2018</p>
+            <ul class="mb-0">
+              <li>Delivered ProSupport Plus grade support for PowerEdge, and Modular servers running VMware, Linux, and Windows.</li>
+              <li>Resolved complex issues involving storage arrays, firmware, RAID, and iDRAC.</li>
+              <li>Collaborated with internal support groups to resolve issues spanning multiple interdependent products.</li>
+              <li>Provided system health assessments and lifecycle optimization strategies.</li>
+            </ul>
+          </div>
 
-    if (!contactClone) {
-      contactClone = document.createElement('div');
-      contactClone.className = 'sidebar-contact-content';
-      contactClone.innerHTML = `
-        <p style="text-align: center; font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem;">Dan Rothman</p>
-        <hr style="margin: 0.3rem 0;">
-        <p><i class="bi bi-geo-alt"></i> Oklahoma City, OK</p>
-        <p><i class="bi bi-telephone"></i> <a href="tel:2064327106">+1 (206) 432-7106</a></p>
-        <p><i class="bi bi-envelope"></i> <a href="mailto:dan@rothman.work">dan@rothman.work</a></p>
-        <p><i class="bi bi-globe"></i> <a href="https://dan.rothman.work" target="_blank">dan.rothman.work</a></p>
-        <p><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/dan-rothman" target="_blank">linkedin.com/in/dan-rothman</a></p>
-      `;
-    }
+          <div class="sub-card" id="exp-analyst">
+            <h4 class="h6 m-0">Enterprise Tech Support Analyst</h4>
+            <p class="text-muted small mb-2">Nov 2015 – Jan 2017</p>
+            <ul class="mb-0">
+              <li>Delivered enterprise-grade support for PowerEdge servers running VMware, Linux, and Windows.</li>
+              <li>Mentored new analysts and contributed to internal training.</li>
+              <li>Recognized as a top performer and CCNA-certified networking SME.</li>
+              <li>Selected for Early Life Support team to debug hardware issues with new generation PowerEdge hardware and to field the first support calls.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
 
-    if (!sidebarContact.classList.contains('show')) {
-      sidebarContact.innerHTML = '';
-      sidebarContact.appendChild(contactClone);
-      sidebarContact.classList.add('show');
-    }
+      <!-- Certifications (replaced with old content) -->
+      <section id="certifications" class="card-like mb-3" aria-labelledby="cert-h">
+        <h2 id="cert-h" class="h4">Certifications</h2>
+        <p class="chips mb-0">
+          <span>VMware Certified Professional 6 – Data Center Virtualization (VCP6-DCV)</span>
+          <span>VxRail Xpert</span>
+          <span>Cisco Certified Network Associate (CCNA) – exp. 2019 - CSCO12950075</span>
+          <span>CompTIA Network+ - exp. 2018</span>
+        </p>
+      </section>
 
-    if (sidebarProfile && !sidebarProfile.classList.contains('show')) {
-      sidebarProfile.classList.add('show');
-    }
-  } else {
-    mainContact.classList.remove('animate-out');
-    mainContact.classList.add('animate-in');
-    profile.classList.remove('animate-out');
-    profile.classList.add('animate-in');
+      <!-- Awards (replaced with old content) -->
+      <section id="awards" class="card-like mb-3" aria-labelledby="awards-h">
+        <h2 id="awards-h" class="h4">Awards</h2>
+        <p class="chips mb-0">
+          <span>On the Spot Award – Recognized for fostering team morale. (2015)</span>
+          <span>On the Spot Award – For (2016)</span>
+          <span>Top Performer Award – Top Performing Engineer (2017)</span>
+          <span>Award – Contributions to Wells Fargo’s first PowerFlex migration from 3.x to 4.x</span>
+        </p>
+      </section>
 
-    sidebarContact.classList.remove('show');
-    if (sidebarProfile) sidebarProfile.classList.remove('show');
+      <!-- Skills (replaced with old content) -->
+      <section id="skills" class="card-like mb-3" aria-labelledby="skills-h">
+        <h2 id="skills-h" class="h4">Technical Skills</h2>
+        <p class="chips mb-0">
+          <span>PowerFlex</span><span>VxRail</span><span>VMware vSphere/VCF</span><span>PowerEdge</span>
+          <span>vSAN</span><span>Nutanix</span><span>Kubernetes</span><span>Docker</span>
+          <span>Bash</span><span>PowerShell</span><span>REST APIs</span><span>Root Cause Analysis</span>
+          <span>Incident Management</span><span>Technical Mentorship</span><span>Documentation</span><span>Customer Communication</span>
+          <span>Escalation Management</span>
+        </p>
+      </section>
+    </main>
+  </div>
 
-    setTimeout(() => {
-      const contactVisible = getComputedStyle(sidebarContact).opacity !== '0';
-      if (!contactVisible) {
-        sidebarContact.innerHTML = '';
-      }
-    }, 500);
-  }
+<!-- JSON-LD: Person schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dan Rothman",
+  "jobTitle": "Principal Engineer",
+  "image": "profile.jpg",
+  "url": "https://dan.rothman.work",
+  "email": "mailto:dan@rothman.work",
+  "telephone": "+12064327106",
+  "address": {"@type":"PostalAddress","addressLocality":"Oklahoma City","addressRegion":"OK","addressCountry":"US"},
+  "sameAs": ["https://www.linkedin.com/in/dan-rothman"]
 }
+</script>
+
+<script>
+  // Theme toggle with system-pref fallback
+  (function () {
+    const root = document.documentElement;
+    const toggles = document.querySelectorAll('.js-theme-toggle');
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = saved || (prefersDark ? 'dark' : 'light');
+
+    root.setAttribute('data-theme', initial);
+    toggles.forEach(btn => btn.setAttribute('aria-pressed', initial === 'dark'));
+
+    const flip = () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggles.forEach(btn => btn.setAttribute('aria-pressed', next === 'dark'));
+    };
+
+    toggles.forEach(btn => btn.addEventListener('click', flip));
+  })();
+</script>
+
+<script>
+// Active link syncing based on section visibility
+(function () {
+  const links = Array.from(document.querySelectorAll('.sidebar-nav .nav-link[href^="#"]'));
+  const idToLink = new Map();
+  const targets = [];
+
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) { idToLink.set(id, a); targets.push(el); }
   });
-}, {
-  threshold: 0,
-  rootMargin: '-100px 0px 0px 0px'
-});
-if (profile) contactObserver.observe(profile);
-    });
-  </script>
-  </body>
-  </html>
+
+  function setActive(id) {
+    links.forEach(a => a.removeAttribute('aria-current'));
+    const active = idToLink.get(id);
+    if (active) active.setAttribute('aria-current', 'true');
+  }
+
+  const anchorRatio = 0.30; // 30% from top
+  let ticking = false;
+
+  function onScroll() {
+    ticking = false;
+    const anchorY = window.innerHeight * anchorRatio;
+
+    // pick the last section whose top is above the anchor line
+    let activeId = targets.length ? targets[0].id : null;
+    for (const el of targets) {
+      const top = el.getBoundingClientRect().top;
+      if (top - anchorY <= 0) activeId = el.id; else break;
+    }
+    if (activeId) setActive(activeId);
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  // initialize (also handles hash on load)
+  if (location.hash && idToLink.has(location.hash.slice(1))) {
+    setActive(location.hash.slice(1));
+  } else {
+    onScroll();
+  }
+
+  // set active immediately on click, then scroll handler will keep it updated
+  links.forEach(a => a.addEventListener('click', () => {
+    const id = a.getAttribute('href').slice(1);
+    setActive(id);
+  }));
+})();
+</script>
+
+<script>
+  (function () {
+    const header = document.querySelector('header.site-header');
+    const card = document.querySelector('.js-profile-card');
+    const mq = window.matchMedia('(min-width: 992px)');
+    if (!header || !card) return;
+
+    // Easing so both fades feel the same (smoothstep)
+    const ease = t => t * t * (3 - 2 * t); // 0..1 -> 0..1
+
+    // Crossfade band (unchanged)
+    const START = 0.35;  // begin crossfade when header ~65% visible
+    const END   = 0.02;  // finish when header ~2% visible
+
+    // SHIFT: about one mouse-wheel "notch" sooner (tweak to taste)
+    const SCROLL_AHEAD_PX = 100; // try 80–140 if you want more/less shift
+
+    const clamp01 = x => Math.max(0, Math.min(1, x));
+    const setCardFade = f => card.style.setProperty('--fade', f.toFixed(3));
+
+    function showCardFully() {
+      if (card.dataset.state === 'shown') return;
+      if (card.dataset.state === 'crossfading') {
+        const h = card.offsetHeight;
+        card.style.height = h + 'px';
+        requestAnimationFrame(() => {
+          card.style.height = 'auto';
+          card.dataset.state = 'shown';
+        });
+        return;
+      }
+      card.style.display = '';
+      card.style.height = '0px';
+      void card.offsetWidth;
+      card.style.height = card.scrollHeight + 'px';
+      card.dataset.state = 'animating-in';
+      const onEnd = (e) => {
+        if (e.target !== card || e.propertyName !== 'height') return;
+        card.removeEventListener('transitionend', onEnd);
+        card.style.height = 'auto';
+        card.dataset.state = 'shown';
+      };
+      card.addEventListener('transitionend', onEnd);
+    }
+
+    function hideCardFully() {
+      if (card.style.display === 'none' || card.dataset.state === 'hidden') return;
+      card.style.height = card.scrollHeight + 'px';
+      void card.offsetWidth;
+      card.style.height = '0px';
+      card.dataset.state = 'animating-out';
+      const onEnd = (e) => {
+        if (e.target !== card || e.propertyName !== 'height') return;
+        card.removeEventListener('transitionend', onEnd);
+        card.style.display = 'none';
+        card.dataset.state = 'hidden';
+      };
+      card.addEventListener('transitionend', onEnd);
+    }
+
+    function resetMobile() {
+      setCardFade(0);
+      card.style.display = 'none';
+      card.style.height = '0px';
+      card.dataset.state = 'hidden';
+      header.style.opacity = '';
+    }
+
+    // How much of the header is visible, but shifted upward by SCROLL_AHEAD_PX
+    function headerVisibleRatio() {
+      const rect = header.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // raw visible pixels of header
+      const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+
+      // shift earlier by a fixed pixel amount
+      const shifted = visiblePx - SCROLL_AHEAD_PX;
+
+      // normalize to 0..1 range of header height
+      return clamp01(shifted / Math.max(1, rect.height));
+    }
+
+    // rAF scroll loop
+    let ticking = false;
+    function update() {
+      ticking = false;
+      if (!mq.matches) { resetMobile(); return; }
+
+      const ratio = headerVisibleRatio();                 // 1..0 as header leaves (shifted)
+      const progress = clamp01((START - ratio) / (START - END)); // 0 at START, 1 at END
+      const eased = ease(progress);
+
+      // Header fade (driven directly)
+      header.style.opacity = (1 - eased).toFixed(3);
+
+      if (progress <= 0) {
+        setCardFade(0);
+        if (card.style.display !== 'none') hideCardFully();
+        return;
+      }
+
+      if (card.style.display === 'none') {
+        card.style.display = '';
+        card.style.height = 'auto';
+        card.dataset.state = 'crossfading';
+      }
+
+      setCardFade(eased);
+
+      if (progress >= 1) {
+        setCardFade(1);
+        showCardFully();
+      }
+    }
+
+    function onScrollOrResize() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    mq.addEventListener('change', onScrollOrResize);
+
+    // First paint
+    update();
+  })();
+</script>
+
+</body>
+</html>
